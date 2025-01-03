@@ -3,4 +3,27 @@
   <p>By {{ post.author }} on {{ post.published_date }}</p>
   <div>{{ post.content|safe }}</div>
   <a href="{% url 'blog:post_list' %}">Back to Blog</a>
+  <hr />
+  <p class="">
+    <a href="{% url 'blog:post_share' post.id %}" class="">Share this post</a>
+  </p>
+  <h2>Comments</h2>
+  {% with total_comments=comment.count %}
+    <h2>Total comments is {{ total_comments|pluralize }}</h2>
+  {% endwith %}
+  <ul>
+    {% for comment in comments %}
+      <li>Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created }}
+        said: {{ comment.content|linebreaks }}</li>
+    {% empty %}
+      <li>No comments yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Leave a comment</h2>
+  <form method="post" action="{% url 'blog:post_comment' post.id %}">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
 {% endblock %}

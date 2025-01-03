@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+<div class="share-container">
+  {% if sent %}
+    <h1 class="">Email sent successfully</h1>
+    <p class="">{{ post.title }} has been shared with {{ form.cleaned_data.to }}.</p>
+    {% ele %}
+    <h1>Share this Post</h1>
+
+    <form action="{% url 'share_post' post.id %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="to">Recipient's Email:</label>
+        <input type="email" id="to" name="to" required />
+      </div>
+      <div class="form-group">
+        <label for="comments">Comments:</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
+      </div>
+      <button type="submit">Share</button>
+    </form>
+  {% endif %}
+</div>
