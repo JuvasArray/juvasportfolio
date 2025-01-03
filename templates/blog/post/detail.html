@@ -1,0 +1,6 @@
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p>By {{ post.author }} on {{ post.published_date }}</p>
+  <div>{{ post.content|safe }}</div>
+  <a href="{% url 'blog:post_list' %}">Back to Blog</a>
+{% endblock %}
