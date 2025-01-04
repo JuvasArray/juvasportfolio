@@ -1,0 +1,9 @@
+<h1>Latest Blog Posts</h1>
+<ul>
+  {% for post in latest_posts %}
+    <li>
+      <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a>
+      <small>Published on {{ post.published_date }}</small>
+    </li>
+  {% endfor %}
+</ul>
