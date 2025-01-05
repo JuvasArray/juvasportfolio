@@ -5,24 +5,52 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Blog Posts</h1>
+  <header class="header">
+    <h1 class="">Blog Posts</h1>
+  </header>
+
   {% if tag %}
     <h2>Posts tagged with "{{ tag }}"</h2>
   {% endif %}
-  <ul>
-    {% for post in posts %}
-      <li>
-        <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-        <p class="date">Published {{ post.publish }} by {{ post.author }}</p>
-        <p>{{ post.content|truncatewords:30|linebreaks }}</p>
-        <p>Tags: 
-          {% for tag in post.tags.all %}
-            <a href="{% url 'blog:post_list' tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
-          {% endfor %}
-        </p>
-      </li>
-    {% endfor %}
-  </ul>
 
+  {% for post in posts %}
+    <section class="{% if forloop.counter|divisibleby:2 %}
+        
+         blog-card alt
+
+      {% else %}
+        
+         blog-card
+
+      {% endif %}">
+      <div class="meta">
+        <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)"></div>
+        <ul class="details">
+          <li class="author">
+            <a href="" class="">{{ post.author }}</a>
+          </li>
+          <li class="date">{{ post.publish }}</li>
+          <div class="tags">
+            <ul>
+              {% for tag in post.tags.all %}
+                <li>
+                  <a href="{% url 'blog:post_list' tag.slug %}" class="">{{ tag.name }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </ul>
+      </div>
+
+      <div class="description">
+        <h1><a href="{{ post.get_absolute_url }}" class=""></a>{{ post.title }}</h1>
+        <h2>{{ post.overview }}</h2>
+        <p>{{ post.content|truncatewords:30|linebreaks }}</p>
+        <p class="read-more">
+          <a href="{{ post.get_absolute_url }}" class="">Read More</a>
+        </p>
+      </div>
+    </section>
+  {% endfor %}
   {% include '_pagination.html' with page=page_obj %}
 {% endblock %}
