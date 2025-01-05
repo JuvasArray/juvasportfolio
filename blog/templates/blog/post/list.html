@@ -16,15 +16,31 @@
   {% for post in posts %}
     <section class="{% if forloop.counter|divisibleby:2 %}
         
+        
+        
+        
          blog-card alt
+
+
+
 
       {% else %}
         
+        
+        
+        
          blog-card
+
+
+
 
       {% endif %}">
       <div class="meta">
-        <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)"></div>
+        {% if post.feature_image %}
+          <div class="photo" >
+            <img src="{{ post.feature_image.url }}" alt="" class="" style="background-size: cover; background-position: center; max-width: 100%; max-height: 100%;">
+          </div>
+        {% endif %}
         <ul class="details">
           <li class="author">
             <a href="" class="">{{ post.author }}</a>

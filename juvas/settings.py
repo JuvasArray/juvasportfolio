@@ -116,6 +116,11 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media files (Uploaded files)
+# https://docs.djangoproject.com/en/5.1/ref/settings/#media-root
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
 from decouple import config
