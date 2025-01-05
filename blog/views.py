@@ -6,13 +6,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 
-
-
 from blog.forms import EmailPostForm, CommentForm
 from blog.models import Post
 
 from taggit.models import Tag
-from django.db.models import Count
 
 class PostListView(ListView):
     queryset = Post.published.all()
@@ -33,7 +30,7 @@ class PostListView(ListView):
         context['tag'] = self.kwargs.get('tag_slug')
         return context
     
-
+    
     
 class PostDetailView(DetailView):
     model = Post
@@ -44,19 +41,11 @@ class PostDetailView(DetailView):
         post = self.kwargs.get('post')
         return get_object_or_404(Post, slug=post)
     
-    def get_queryset(self):
-        post = self.kwargs.get('post')
-        post_tags_ids = post.tags.values_list('id', flat=True)
-        similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
-        similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
-        
-    
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
         context['post'] = self.object
         context['comments'] = self.object.comments.filter(active=True)
         context['comment_form'] = CommentForm()
-        # context['similar_posts'] = get_object_or_404(Post, slug=self.kwargs.get('post_slug'))
         return context
     
 

@@ -11,25 +11,11 @@
 
       {% endblock %}
     </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   </head>
   <body>
-    <header>
-      <h1>Welcome to My Blog</h1>
-      <nav>
-        <ul>
-          {% comment %} <li>
-            <a href="{% url 'home' %}">Home</a>
-          </li> {% endcomment %}
-          {% comment %} <li>
-            <a href="{% url 'about' %}">About</a>
-          </li> {% endcomment %}
-          {% comment %} <li>
-            <a href="{% url 'contact' %}">Contact</a>
-          </li> {% endcomment %}
-        </ul>
-      </nav>
-    </header>
+    {% include 'blog/navigation.html' %}
 
     <main>
       {% block content %}
@@ -72,5 +58,7 @@
     <footer>
       <p>&copy; 2023 My Blog. All rights reserved.</p>
     </footer>
+
+    <script src="{% static 'js/navbar.js' %}"></script>
   </body>
 </html>
