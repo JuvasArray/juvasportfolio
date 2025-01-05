@@ -7,3 +7,6 @@
 
 /* List styles */
 @import url('list.css');
+
+/* Pagination styles */
+@import url('pagination.css');

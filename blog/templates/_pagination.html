@@ -1,15 +1,34 @@
 <div class="pagination">
-  <span class="step-links">
-    {% if posts.has_previous %}
-      <a href="?page=1">&laquo; first</a>
-      <a href="?page={{ posts.previous_page_number }}">previous</a>
+  <div id="pagination-container">
+    <div id="indicator"></div>
+    {% if page_obj.has_previous %}
+      <a class="pag-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+
+      {% if page_obj.number > 3 %}
+        <a class="pag-link" href="?page=1">1</a>
+        {% if page_obj.number > 4 %}
+          <a class="pag-link">...</a>
+        {% endif %}
+      {% endif %}
     {% endif %}
 
-    <span class="current">Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</span>
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <a class="pag-link" href="?page={{ num }}">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a class="pag-link" href="?page={{ num }}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
 
-    {% if posts.has_next %}
-      <a href="?page={{ posts.next_page_number }}">next</a>
-      <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+    {% if page_obj.has_next %}
+      {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+        <a class="pag-link">...</a>
+        <a class="pag-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+      {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+        <a class="pag-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+      {% endif %}
+
+      <a class="pag-link" href="?page={{ page_obj.next_page_number }}">Next</a>
     {% endif %}
-  </span>
+  </div>
 </div>
